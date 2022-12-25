@@ -20,10 +20,11 @@ module.exports.createpage_get = (req, res) => {
 }
 
 module.exports.createpage_post = async (req, res) => {
-    const { name, message } = req.body
+    const { name, message, type, dateOfBirth } = req.body
+    const expireAt = dateOfBirth
     try{
-        const celebrant = await Celebrant.create({ name, message})
-        res.status(201).json({data: `http://127.0.0.1:3500/celebrantpage?id=${celebrant._id}`})
+        const celebrant = await Celebrant.create({ name, message, type, dateOfBirth, expireAt})
+        res.status(201).json({data: `http://127.0.0.1:3500/celebrantpage?id=${celebrant._id} ${celebrant.dateOfBirth}`})
     }
     catch (err) {
         res.status(400).json(err)
