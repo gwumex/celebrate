@@ -17,6 +17,11 @@ const celebrantSchema = new mongoose.Schema(
             type: Date,
             required: true
         },
+        img:
+        {
+            data: Buffer,
+            contentType: String
+        },
         expireAt: {
             type: Date,
             default: new Date(new Date().valueOf() + 86400),

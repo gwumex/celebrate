@@ -10,6 +10,8 @@ const router = require('./routes/celebrantRoute')
 connectDB();
 let urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(urlencodedParser);
+app.use(bodyParser.json())
+app.set("view engine", "ejs");
 // app.use(express.json())
 var path = require('path');
 
