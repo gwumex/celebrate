@@ -7,21 +7,24 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Uploaded Images</h1>
+    <a href="/createpage"> uploadcelebrant</a>
+    <a href="/"> Home</a>
+
+    <h1>Uploaded Celebrants</h1>
     <div>
-        <% items.forEach(function(image) { %>
+        <% items.forEach(function(celebrant) { %>
         <div>
             <div>
-                <img src="data:image/<%=image.img.contentType%>;base64,
-                     <%=image.img.data.toString('base64')%>">
+                <img src="data:image/<%=celebrant.img.image1.contentType%>;base64,
+                     <%=celebrant.img.image1.data.toString('base64')%>">
+                     <img src="data:image/<%=celebrant.img.image2.contentType%>;base64,
+                     <%=celebrant.img.image2.data.toString('base64')%>">
                 <div>
-                    <h5><%= image.name %></h5>
+                    <h5><%= celebrant.name %></h5>
                      
- 
- 
-<p><%= image.message %></p>
-<p><%= image.dateOfBirth %></p>
-<p><%= image.type %></p>
+<p><%= celebrant.message %></p>
+<p><%= celebrant.dateOfBirth %></p>
+<p><%= celebrant.type %></p>
 
  
  

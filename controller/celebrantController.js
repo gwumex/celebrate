@@ -37,27 +37,33 @@ module.exports.createpage_get = (req, res) => {
 
 
 module.exports.createpage_post = async (req, res) => {
-
+    // res.send("hello i am " + req.body.newFilename)
+    console.log("Hello--------------------------")
     var obj = {
         name: req.body.name,
         message: req.body.message,
         type: req.body.type,
         dateOfBirth: req.body.dateOfBirth,
         expireAt: req.body.dateOfBirth,
-        img: {
-            data: await sharp(fs.readFileSync(path.join('./uploads/' + req.file.filename)))
-            .resize(320, 240)
-            .toBuffer()
-            .then(data => { 
-              return data;
-          }),
+        img: {image1 :{
+            data: fs.readFileSync(path.join(`uploads/${req.body.newFilename[0]}`)),
+            contentType: 'image/png'
+        },
+        image2 :{
+            data: fs.readFileSync(path.join(`uploads/${req.body.newFilename[1]}`)),
+            contentType: 'image/png'
+        },
+        image3 :{
+            data: fs.readFileSync(path.join(`uploads/${req.body.newFilename[2]}`)),
             contentType: 'image/png'
         }
+
+    }
     }
 
     try {
         const celebrant = await Celebrant.create(obj)
-        res.status(201).json({ data: `http://127.0.0.1:3500/celebrantpage?id=${celebrant._id}` })
+        res.status(201).json({ data: `http://127.0.0.1:3500/celebrantpage?id=${celebrant._id} ` })
     }
     catch (err) {
         res.status(400).json(err)
