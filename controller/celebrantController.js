@@ -1,7 +1,9 @@
 const Celebrant = require('../model/Celebrant')
 var path = require('path');
 var fs = require('fs');
-const sharp = require('sharp');
+const { promisify } = require("util")
+const unlinkAsync = promisify(fs.unlink)
+
 
 
 
@@ -37,14 +39,22 @@ module.exports.createpage_get = (req, res) => {
 
 
 module.exports.createpage_post = async (req, res) => {
-    // res.send("hello i am " + req.body.newFilename)
-    console.log("Hello--------------------------")
+
+    const newFileName = req.body.newFilename;
+    console.log("-------------------------"  + newFileName)
     var obj = {
         name: req.body.name,
         message: req.body.message,
         type: req.body.type,
         dateOfBirth: req.body.dateOfBirth,
         expireAt: req.body.dateOfBirth,
+        // img: newFileName.map(fileName => {
+        //     return (image = {
+        //         data: fs.readFileSync(path.join(`uploads/${fileName}`)),
+        //         contentType: 'image/png'
+        //     })
+        // })
+        
         img: {image1 :{
             data: fs.readFileSync(path.join(`uploads/${req.body.newFilename[0]}`)),
             contentType: 'image/png'
@@ -57,12 +67,18 @@ module.exports.createpage_post = async (req, res) => {
             data: fs.readFileSync(path.join(`uploads/${req.body.newFilename[2]}`)),
             contentType: 'image/png'
         }
-
     }
     }
 
     try {
         const celebrant = await Celebrant.create(obj)
+    // delete from upload folder after upload
+        if(celebrant._id){
+            req.body.newFilename.map( (filename) =>{
+                 unlinkAsync(path.join(`uploads/${filename}`))
+                 console.log(filename);
+            })
+        }
         res.status(201).json({ data: `http://127.0.0.1:3500/celebrantpage?id=${celebrant._id} ` })
     }
     catch (err) {

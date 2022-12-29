@@ -45,7 +45,7 @@ const resizeImages = async (req, res, next) => {
     await Promise.all(
         req.files.map(async file => {
             const filename = file.originalname.replace(/\..+$/, "");
-            const newFilename = `images- ${filename}-${Date.now()}.jpeg`;
+            const newFilename = `images-${filename}-${Date.now()}.jpeg`;
             req.body.newFilename.push(newFilename);
 
             await sharp(file.buffer)
